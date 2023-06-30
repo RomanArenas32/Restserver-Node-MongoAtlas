@@ -83,12 +83,15 @@ const deleteUsers = async (req = request, res = response) => {
 
     const { id } = req.params;
 
-   // const usuario = await Usuario.findByIdAndDelete(id); //borra el usuario por completo, no recomendable si es que el usuario ha creado cosas etc porque perderiamos para siempre la referencia
+    const usuarioAutenticado = req.usuario;
 
-   const usuario = await Usuario.findByIdAndUpdate(id, {estado: false});    //en ves de eliminarlo por completo vamos a cambiar el estado a false para que no se visualize
+    // const usuario = await Usuario.findByIdAndDelete(id); //borra el usuario por completo, no recomendable si es que el usuario ha creado cosas etc porque perderiamos para siempre la referencia
+
+    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });    //en ves de eliminarlo por completo vamos a cambiar el estado a false para que no se visualize
     res.status(200).json({
-        msg: "Usuario eliminado/restringido exitosamente",
-        usuario
+
+        usuario,
+        usuarioAutenticado
     })
 }
 
